@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Transaction from './Transction';
+import '../App.css';
 
 class Transactions extends Component{
     // constructor(){
@@ -18,7 +19,10 @@ class Transactions extends Component{
         return(
             <div>
                 <h2>Transactions</h2>
-                {transactions_to_display.map(t => <Transaction key={transactions.indexOf(t)} transaction = {t} delete={this.props.delete}/>)}
+                <h3 className="transactions"><span>amount</span> <span>vendor</span> <span>category</span> <span>date</span></h3>
+         
+                   {transactions_to_display.map(t => <Transaction key={t._id} transaction = {t} delete={this.props.delete}/>)}
+             
             </div>
             )
     }

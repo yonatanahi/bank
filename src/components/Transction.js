@@ -10,8 +10,11 @@ class Transaction extends Component{
 
     render(){
         return(
-            <div>
-                {this.props.transaction.amount}-{this.props.transaction.vendor}-{this.props.transaction.category}-{this.props.transaction.date}
+            <div className="transactions">
+                <span>{this.props.transaction.amount}</span>
+                <span>{this.props.transaction.vendor}</span>
+                <span>{this.props.transaction.category}</span>
+                <span>{this.props.transaction.date}</span> 
                 <button onClick={this.delete}>Delete</button>
             </div>
             )

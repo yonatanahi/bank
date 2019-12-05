@@ -98,7 +98,7 @@ class App extends Component {
         <div>
           <h1>My Account</h1>
           <h2>Balance: ${this.balance()}</h2>
-          <h2>Month: </h2><input type="month" onChange={this.filterByMonth}></input><button onClick={this.reset}>Reset</button><br></br>
+          <h2>Month: <input type="month" onChange={this.filterByMonth}></input><button onClick={this.reset}>Reset</button></h2>
           
 
           <Link to="/transactions" className="link">Transactions</Link>

@@ -21,32 +21,30 @@ class Operations extends Component {
             value = Number(value)
         }
 
-        await this.setState({
+         this.setState({
             [name]: value
         });
     }
 
-    deposit = (e) => {        
-        if (this.state.amount > 0) {
-            this.props.addOperation(this.state)
-        } else {
+    deposit = (e) => {                
+        if (this.state.amount < 0) {
             let positive = this.state.amount * -1
             this.setState({
                 amount: positive
             })
         }
+        this.props.addOperation(this.state)
     }
 
-    withdraw = (e) => {
-        if (this.state.amount < 0) {
-            this.props.addOperation(this.state)
-        } else {
-            let negative = this.state.amount
-            negative = -1 * negative
-            this.setState({
+    withdraw = async (e) => {
+        if (this.state.amount > 0) {
+            let negative = this.state.amount * -1
+             this.setState({
                 amount: negative
             })
         }
+        
+        this.props.addOperation(this.state)
     }
 
 

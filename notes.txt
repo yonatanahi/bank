@@ -1,1 +1,2 @@
-withdraw button
+2. to add checks of the inputs
+3. fix the negative positive problem - deposit withdraw buttons
