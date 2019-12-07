@@ -9,6 +9,7 @@ class Operations extends Component {
             vendor: null,
             category: null
         }
+        this.operation = {}
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
@@ -21,30 +22,18 @@ class Operations extends Component {
             value = Number(value)
         }
 
-         this.setState({
-            [name]: value
-        });
+         this.operation[name] = value
+        
     }
 
     deposit = (e) => {                
-        if (this.state.amount < 0) {
-            let positive = this.state.amount * -1
-            this.setState({
-                amount: positive
-            })
-        }
-        this.props.addOperation(this.state)
+        this.operation.amount = Math.abs(this.operation.amount)
+        this.props.addOperation(this.operation)
     }
 
     withdraw = async (e) => {
-        if (this.state.amount > 0) {
-            let negative = this.state.amount * -1
-             this.setState({
-                amount: negative
-            })
-        }
-        
-        this.props.addOperation(this.state)
+        this.operation.amount = -Math.abs(this.operation.amount)
+        this.props.addOperation(this.operation)
     }
 
 

@@ -1,31 +1,30 @@
-.App {
+body {
   text-align: center;
-}
+  background-color: cadetblue;
 
-.App-logo {
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #09d3ac;
 }
 
 .link{
   margin: 10px;
 }
 
-.transactions{
+.transaction{
   display: grid;
   grid-template-columns: repeat(5, 100px);
+  text-align: center;
+
+}
+
+#header{
+  background-color: cadetblue;
+}
+
+#transactions-container{
+  background-color: darkcyan;
+}
+
+.breakdown{
+  display: grid;
+  grid-template-columns: 100px 100px;
+  text-align: center;
 }

@@ -10,7 +10,7 @@ class Transaction extends Component{
 
     render(){
         return(
-            <div className="transactions">
+            <div className="transaction">
                 <span>{this.props.transaction.amount}</span>
                 <span>{this.props.transaction.vendor}</span>
                 <span>{this.props.transaction.category}</span>

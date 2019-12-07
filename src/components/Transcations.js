@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Transaction from './Transction';
-import '../App.css';
 
 class Transactions extends Component{
     // constructor(){
@@ -17,9 +16,9 @@ class Transactions extends Component{
         let transactions_to_display = this.props.transactions_to_display
         let transactions = this.props.transactions
         return(
-            <div>
+            <div id="transactions-container">
                 <h2>Transactions</h2>
-                <h3 className="transactions"><span>amount</span> <span>vendor</span> <span>category</span> <span>date</span></h3>
+                <h3 className="transaction"><span>amount</span> <span>vendor</span> <span>category</span> <span>date</span></h3>
          
                    {transactions_to_display.map(t => <Transaction key={t._id} transaction = {t} delete={this.props.delete}/>)}
              

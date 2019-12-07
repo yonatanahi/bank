@@ -95,21 +95,21 @@ class App extends Component {
     return (
       
       <Router>
-        <div>
-          <h1>My Account</h1>
+        <div id="header">
+          <h1>Account Manager</h1>
           <h2>Balance: ${this.balance()}</h2>
           <h2>Month: <input type="month" onChange={this.filterByMonth}></input><button onClick={this.reset}>Reset</button></h2>
           
 
           <Link to="/transactions" className="link">Transactions</Link>
           <Link to="/operations" className="link">Operations</Link>
-          <Link to="/sum_by_category" className="link">Sum By Category</Link>
+          <Link to="/breakdown" className="link">Breakdown</Link>
           {/* <Link to="/sort_by" className="link">Sort By</Link> */}
 
 
         </div>
         <Route path="/transactions" exact render={() => <Transactions transactions_to_display={this.state.transactions_to_display} delete={this.delete} transactions={this.state.transactions}/>} />
-        <Route path="/sum_by_category" exact render={() => <SumByCategory transactions_to_display={this.state.transactions_to_display} categories={this.state.categories}/>} />
+        <Route path="/breakdown" exact render={() => <SumByCategory transactions_to_display={this.state.transactions_to_display} categories={this.state.categories}/>} />
         <Route path="/operations" exact render={() => <Operations transactions={this.state.transactions} addOperation={this.addOperation} />} />
         {/* <Route path="/sort_by" exact render={() => <SortBy/>} /> */}
       </Router>

@@ -1,2 +1,9 @@
 2. to add checks of the inputs
-3. fix the negative positive problem - deposit withdraw buttons
+fonts
+colors UI colors
+centeralize items
+duplicate transactions
+server/mongoose operations
+sorting
+materialize + moment - date picker
+red-green colors for transactions
