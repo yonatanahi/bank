@@ -1,9 +1,6 @@
-2. to add checks of the inputs
 fonts
 colors UI colors
 centeralize items
 duplicate transactions
 server/mongoose operations
 sorting
-materialize + moment - date picker
-red-green colors for transactions
