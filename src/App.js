@@ -4,8 +4,6 @@ import Transactions from './components/Transcations'
 import './App.css';
 import Operations from './components/Operations';
 import SumByCategory from './components/Breakdown';
-// import SortBy from './components/SortBy';
-
 
 
 const axios = require('axios');
@@ -15,7 +13,6 @@ class App extends Component {
     super()
     this.state = {
       transactions: [],
-      // transactions_by_category:[],
       transactions_to_display: [],
       categories: []
     }
@@ -23,19 +20,13 @@ class App extends Component {
 
   getTransactions = async () => {
     const response = await axios.get("http://localhost:3001/transactions")
-    this.setState({ transactions: response.data })
-    this.setState({ transactions_to_display: response.data })
-    this.setState({ categories: this.getCategories(response.data) })
+    this.setState({ transactions: response.data,
+                    transactions_to_display: response.data,
+                    categories: this.getCategories(response.data) })
   }
 
-  // async getTransactionsByCategory() {
-  //   const response = await axios.get("http://localhost:3001/transactions_by_category")
-  //    this.setState({ transactions_by_category: response.data })
-  // }
-
-  async componentDidMount() {
-    await this.getTransactions()
-    // await this.getTransactionsByCategory()
+  componentDidMount() {
+    this.getTransactions()
   }
 
   async postTransaction(operation) {
@@ -55,10 +46,8 @@ class App extends Component {
     return balance
   }
 
-  addOperation = (operation) => {    
-    console.log(operation);
-    
-    if (Object.values(operation).some(v => v === null || v === 0)) {
+  addOperation = (operation) => {        
+    if (Object.values(operation).some(v => v === null)) {
       alert("Empty fields are not allowed!")
     } else {
       this.postTransaction(operation)
@@ -89,19 +78,17 @@ class App extends Component {
   }
 
   getCategories = (transactions) => {
-    let categories = []
-    for (let t of transactions) {
-      if (!categories.includes(t.category)) {
-        categories.push(t.category)
-      }
-    }
+    let categories = [...new Set(transactions.map(t => t.category))] 
     return categories
   }
 
   check_month_year = (transactions) => {
-    let month_year = transactions.map(t => t.date.slice(0, 7))
-     month_year = [...new Set(month_year)]    
+    let month_year = [...new Set(transactions.map(t => t.date.slice(0, 7)))]    
     return month_year
+  }
+
+  showSnackBar() {
+    return true
   }
 
 
@@ -124,14 +111,11 @@ class App extends Component {
           <Link to="/transactions" className="link">Transactions</Link>
           <Link to="/operations" className="link">Operations</Link>
           <Link to="/breakdown" className="link">Breakdown</Link>
-          {/* <Link to="/sort_by" className="link">Sort By</Link> */}
-
 
         </div>
         <Route path="/transactions" exact render={() => <Transactions transactions_to_display={this.state.transactions_to_display} delete={this.delete} transactions={this.state.transactions} />} />
         <Route path="/breakdown" exact render={() => <SumByCategory transactions_to_display={this.state.transactions_to_display} categories={this.state.categories} />} />
         <Route path="/operations" exact render={() => <Operations transactions={this.state.transactions} addOperation={this.addOperation} />} />
-        {/* <Route path="/sort_by" exact render={() => <SortBy/>} /> */}
       </Router>
 
     );

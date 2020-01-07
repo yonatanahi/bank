@@ -21,12 +21,14 @@ body {
 
 #transactions-container{
   background-color: darkcyan;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
 }
 
 .breakdown{
   display: grid;
   grid-template-columns: 100px 100px;
-  text-align: center;
 }
 
 .green{

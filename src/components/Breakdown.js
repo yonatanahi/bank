@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import {
+    PieChart, Pie, LabelList, Cell,
+} from 'recharts';
 
-class SumByCategory extends Component {
+class Breakdown extends Component {
     sum = (category) => {
         let transactions_to_display = this.props.transactions_to_display
         let sum = 0
@@ -12,17 +15,55 @@ class SumByCategory extends Component {
         return sum
     }
 
+
     render() {
-        let categories = this.props.categories
+        let categories = this.props.categories        
+        let data = categories.map(c => {return {category: c, sum: this.sum(c)}})
+        
+        const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042']
+
+        const RADIAN = Math.PI / 180
+        const renderCustomizedLabel = ({
+            cx, cy, midAngle, innerRadius, outerRadius, percent, index,
+        }) => {
+            const radius = innerRadius + (outerRadius - innerRadius) * 0.5
+            const x = cx + radius * Math.cos(-midAngle * RADIAN)
+            const y = cy + radius * Math.sin(-midAngle * RADIAN)
+            return (
+                <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+                    {`${(percent * 100).toFixed(0)}%`}
+                </text>
+            );
+        };
 
         return (
             <div>
                 <h2>Breakdown</h2>
                 {categories.map(c => <div className="breakdown" key={categories.indexOf(c)}><span>{c}:</span> <span>{this.sum(c)}</span></div>)}
+
+                <PieChart width={400} height={400}>
+                    <Pie
+                        data={data}
+                        cx={200}
+                        cy={200}
+                        labelLine={false}
+                        label={renderCustomizedLabel}
+                        outerRadius={80}
+                        fill="#8884d8"
+                        dataKey="sum"
+                    >
+                        {
+                            data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
+                        }
+                        <LabelList dataKey="category" position="outside"/>
+                    </Pie>
+                </PieChart>
             </div>
         )
     }
 
 }
 
-export default SumByCategory
+
+export default Breakdown
+
