@@ -8,28 +8,12 @@ body {
   margin: 10px;
 }
 
-.transaction{
-  display: grid;
-  grid-template-columns: repeat(5, 100px);
-  text-align: center;
 
-}
 
 #header{
   background-color: cadetblue;
 }
 
-#transactions-container{
-  background-color: darkcyan;
-  display: flex;
-  align-items: center;
-  /* justify-content: center; */
-}
-
-.breakdown{
-  display: grid;
-  grid-template-columns: 100px 100px;
-}
 
 .green{
   color: green;
@@ -37,4 +21,22 @@ body {
 
 .red{
   color: red;
+}
+
+table{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+thead{
+  font-weight: bold;
+}
+
+input{
+  margin: 5px;
+}
+
+.recharts-wrapper{
+  margin-left: auto;
+  margin-right: auto;
 }

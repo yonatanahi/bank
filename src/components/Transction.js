@@ -9,14 +9,14 @@ class Transaction extends Component{
     }
 
     render(){    
-        return(
-            <div className="transaction">
-                <span className={this.props.transaction.amount > 0 ? "green" : "red"}>{this.props.transaction.amount}</span>
-                <span>{this.props.transaction.vendor}</span>
-                <span>{this.props.transaction.category}</span>
-                <span>{this.props.transaction.date.slice(0,10)}</span> 
-                <button onClick={this.delete}>Delete</button>
-            </div>
+        return(     
+            <tr className="transaction">
+                <td className={this.props.transaction.amount > 0 ? "green" : "red"}>{this.props.transaction.amount}</td>
+                <td>{this.props.transaction.vendor}</td>
+                <td>{this.props.transaction.category}</td>
+                <td>{this.props.transaction.date.slice(0,10)}</td> 
+                <td><button onClick={this.delete}>Delete</button></td>
+            </tr>            
             )
     }
   

@@ -52,16 +52,15 @@ class Operations extends Component {
 
         return (
             <div>
-                <h2>Operation</h2>
                 <div><input type="number" placeholder="Amount" name="amount" onChange={this.handleInputChange}></input></div>
                 <div><input type="text" placeholder="Vendor" name="vendor" onChange={this.handleInputChange}></input></div>
-                <div><input type="text" placeholder="Category" name="category" onChange={this.handleInputChange}></input></div>
-                {/* fix that */}
-                <select value={this.state.value} onChange={this.handleChange}>
-                    <option value="grapefruit">Technology</option>
-                    <option value="lime">Food</option>
-                    <option value="coconut">Housing</option>
-                    <option value="mango">Other</option>
+                <select onChange={this.handleChange} name="category" onChange={this.handleInputChange}>
+                    <option value="" disabled selected hidden>Category</option>
+                    <option value="Clothing">Clothing</option>
+                    <option value="Food">Food</option>
+                    <option value="Housing">Housing</option>
+                    <option value="Salary">Salary</option>
+                    <option value="Other">Other</option>
                 </select>
                 <div>
                     <MuiPickersUtilsProvider utils={MomentUtils}>
