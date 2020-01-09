@@ -12,8 +12,7 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      transactions: [],
-      month: null
+      transactions: []
     }
   }
 
@@ -54,58 +53,21 @@ class App extends Component {
     this.deleteTransaction(id)
   }
 
-  setMonth = (e) => {
-    let month = e.target.value
-    month = new Date(month)
-    this.setState({month})
-  }
-
-  filterByMonth = () => {
-    if(this.state.month === null){return this.state.transactions}
-
-    let transactions_by_month = []
-    for (let t of this.state.transactions) {
-      if (new Date(t.date).getMonth() === this.state.month.getMonth()) {
-        transactions_by_month.push(t)
-      }
-    }
-    return transactions_by_month
-  }
-
-  reset = () => {
-    this.setState({month: null})
-  }
-
-
-  check_month_year = (transactions) => {
-    let month_year = [...new Set(transactions.map(t => t.date.slice(0, 7)))]    
-    return month_year
-  }
-
-
   render() {
 
     return (
 
       <Router>
-        <div id="header">
           <h1>Expense Tracker</h1>
           <h2>Balance: <span className={this.balance() > 500 ? "green" : 'red'}>${this.balance()}</span></h2>
-          <h3>Month:
-          <select onChange={this.setMonth}  defaultValue={'DEFAULT'}>
-              <option value="DEFAULT" disabled key={0}>Select Year-Month</option>
-              {this.check_month_year(this.state.transactions).map(m => <option value={m} key={m}>{m}</option>)}
-            </select>
-            <button onClick={this.reset}>Reset</button>
-          </h3>
 
           <Link to="/transactions" className="link">Transactions</Link>
           <Link to="/operations" className="link">Operations</Link>
           <Link to="/breakdown" className="link">Breakdown</Link>
-
-        </div>
-        <Route path="/transactions" exact render={() => <Transactions transactions={this.filterByMonth()} delete={this.delete}/>} />
-        <Route path="/breakdown" exact render={() => <Breakdown transactions={this.filterByMonth()} />} />
+          
+        <Route path="/" exact render={() => <Transactions transactions={this.state.transactions} delete={this.delete}/>} />
+        <Route path="/transactions" exact render={() => <Transactions transactions={this.state.transactions} delete={this.delete}/>} />
+        <Route path="/breakdown" exact render={() => <Breakdown transactions={this.state.transactions} />} />
         <Route path="/operations" exact render={() => <Operations addOperation={this.addOperation} />} />
       </Router>
 
