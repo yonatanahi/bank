@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import Transactions from './components/Transcations'
 import './App.css';
 import Operations from './components/Operations';
-import SumByCategory from './components/Breakdown';
+import Breakdown from './components/Breakdown';
 
 
 const axios = require('axios');
@@ -13,16 +13,13 @@ class App extends Component {
     super()
     this.state = {
       transactions: [],
-      transactions_to_display: [],
-      categories: []
+      month: null
     }
   }
 
   getTransactions = async () => {
     const response = await axios.get("http://localhost:3001/transactions")
-    this.setState({ transactions: response.data,
-                    transactions_to_display: response.data,
-                    categories: this.getCategories(response.data) })
+    this.setState({ transactions: response.data})
   }
 
   componentDidMount() {
@@ -40,9 +37,8 @@ class App extends Component {
   }
 
   balance = () => {
-    let transactions_to_display = this.state.transactions_to_display
     let balance = 0
-    transactions_to_display.map(m => balance += m.amount)
+    this.state.transactions.forEach(m => balance += m.amount)
     return balance
   }
 
@@ -58,37 +54,32 @@ class App extends Component {
     this.deleteTransaction(id)
   }
 
-  filterByMonth = (e) => {
+  setMonth = (e) => {
     let month = e.target.value
     month = new Date(month)
+    this.setState({month})
+  }
+
+  filterByMonth = () => {
+    if(this.state.month === null){return this.state.transactions}
 
     let transactions_by_month = []
     for (let t of this.state.transactions) {
-      if (new Date(t.date).getMonth() === month.getMonth()) {
+      if (new Date(t.date).getMonth() === this.state.month.getMonth()) {
         transactions_by_month.push(t)
       }
     }
-    this.setState({ transactions_to_display: transactions_by_month })
+    return transactions_by_month
   }
 
   reset = () => {
-    this.setState({
-      transactions_to_display: this.state.transactions
-    })
+    this.setState({month: null})
   }
 
-  getCategories = (transactions) => {
-    let categories = [...new Set(transactions.map(t => t.category))] 
-    return categories
-  }
 
   check_month_year = (transactions) => {
     let month_year = [...new Set(transactions.map(t => t.date.slice(0, 7)))]    
     return month_year
-  }
-
-  showSnackBar() {
-    return true
   }
 
 
@@ -101,7 +92,7 @@ class App extends Component {
           <h1>Expense Tracker</h1>
           <h2>Balance: <span className={this.balance() > 500 ? "green" : 'red'}>${this.balance()}</span></h2>
           <h3>Month:
-          <select onChange={this.filterByMonth}  defaultValue={'DEFAULT'}>
+          <select onChange={this.setMonth}  defaultValue={'DEFAULT'}>
               <option value="DEFAULT" disabled key={0}>Select Year-Month</option>
               {this.check_month_year(this.state.transactions).map(m => <option value={m} key={m}>{m}</option>)}
             </select>
@@ -113,9 +104,9 @@ class App extends Component {
           <Link to="/breakdown" className="link">Breakdown</Link>
 
         </div>
-        <Route path="/transactions" exact render={() => <Transactions transactions_to_display={this.state.transactions_to_display} delete={this.delete} transactions={this.state.transactions} />} />
-        <Route path="/breakdown" exact render={() => <SumByCategory transactions_to_display={this.state.transactions_to_display} categories={this.state.categories} />} />
-        <Route path="/operations" exact render={() => <Operations transactions={this.state.transactions} addOperation={this.addOperation} />} />
+        <Route path="/transactions" exact render={() => <Transactions transactions={this.filterByMonth()} delete={this.delete}/>} />
+        <Route path="/breakdown" exact render={() => <Breakdown transactions={this.filterByMonth()} />} />
+        <Route path="/operations" exact render={() => <Operations addOperation={this.addOperation} />} />
       </Router>
 
     );

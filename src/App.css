@@ -1,19 +1,11 @@
 body {
   text-align: center;
   background-color: cadetblue;
-
 }
 
 .link{
   margin: 10px;
 }
-
-
-
-#header{
-  background-color: cadetblue;
-}
-
 
 .green{
   color: green;
@@ -36,7 +28,3 @@ input{
   margin: 5px;
 }
 
-.recharts-wrapper{
-  margin-left: auto;
-  margin-right: auto;
-}

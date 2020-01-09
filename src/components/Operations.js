@@ -54,8 +54,8 @@ class Operations extends Component {
             <div>
                 <div><input type="number" placeholder="Amount" name="amount" onChange={this.handleInputChange}></input></div>
                 <div><input type="text" placeholder="Vendor" name="vendor" onChange={this.handleInputChange}></input></div>
-                <select onChange={this.handleChange} name="category" onChange={this.handleInputChange}>
-                    <option value="" disabled selected hidden>Category</option>
+                <select name="category" onChange={this.handleInputChange} defaultValue={'DEFAULT'}>
+                    <option value="DEFAULT" disabled key={0}>Choose category</option>
                     <option value="Clothing">Clothing</option>
                     <option value="Food">Food</option>
                     <option value="Housing">Housing</option>
