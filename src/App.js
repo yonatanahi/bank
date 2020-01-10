@@ -4,6 +4,7 @@ import Transactions from './components/Transcations'
 import './App.css';
 import Operations from './components/Operations';
 import Breakdown from './components/Breakdown';
+import SimpleSnackbar from './components/Snackbar'
 
 
 const axios = require('axios');
@@ -12,7 +13,8 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      transactions: []
+      transactions: [],
+      status: null
     }
   }
 
@@ -41,11 +43,15 @@ class App extends Component {
     return balance
   }
 
-  addOperation = (operation) => {        
+  addOperation = async (operation) => {      
+    await this.setState({status: null})  
     if (Object.values(operation).some(v => v === null)) {
-      alert("Empty fields are not allowed!")
-    } else {
+       this.setState({status: "empty"})
+    } else if(this.balance() + operation.amount < 500){
+       this.setState({status: "insufficient"})
+    }else{
       this.postTransaction(operation)
+      this.setState({status: "success"})
     }
   }
 
@@ -53,18 +59,25 @@ class App extends Component {
     this.deleteTransaction(id)
   }
 
-  render() {
+  resetStatus = () => {
+    this.setState({status: null})
+  }
 
+  render() {
     return (
 
       <Router>
-          <h1>Expense Tracker</h1>
-          <h2>Balance: <span className={this.balance() > 500 ? "green" : 'red'}>${this.balance()}</span></h2>
+          <h2>Expense Tracker</h2>
+          <h3>Balance: <span className={this.balance() > 500 ? "green" : 'red'}>${this.balance()}</span></h3>
 
           <Link to="/transactions" className="link">Transactions</Link>
           <Link to="/operations" className="link">Operations</Link>
           <Link to="/breakdown" className="link">Breakdown</Link>
           
+          {this.state.status === "success" ? <SimpleSnackbar message="Expense was added!"/> : null}
+          {this.state.status === "empty" ? <SimpleSnackbar message="Empty fields are not allowed!"/> : null}
+          {this.state.status === "insufficient" ? <SimpleSnackbar message="Insufficient Funds"/> : null}
+
         <Route path="/" exact render={() => <Transactions transactions={this.state.transactions} delete={this.delete}/>} />
         <Route path="/transactions" exact render={() => <Transactions transactions={this.state.transactions} delete={this.delete}/>} />
         <Route path="/breakdown" exact render={() => <Breakdown transactions={this.state.transactions} />} />

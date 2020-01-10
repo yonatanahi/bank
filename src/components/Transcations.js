@@ -42,13 +42,13 @@ class Transactions extends Component {
 
         return (
             <div>
-                <h3>Month:
+                <h4>Month:
                     <select onChange={this.setMonth} defaultValue={'DEFAULT'}>
                         <option value="DEFAULT" disabled key={0}>Select Year-Month</option>
                         {this.check_month_year(transactions).map(m => <option value={m} key={m}>{m}</option>)}
                     </select>
                     <button onClick={this.reset}>Reset</button>
-                </h3>
+                </h4>
             < table >
                     <thead><tr><td>Amount</td><td>Vendor</td><td>Category</td><td>Date</td></tr></thead>
                     <tbody>{this.filterByMonth().map(t => <Transaction key={t._id} transaction={t} delete={this.props.delete} />)}</tbody>
